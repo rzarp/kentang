@@ -15,7 +15,7 @@ class Knowledge extends Model
     {
         return $this->belongsTo(Quest::class, "gejala");
     }
-    
+
     public function kode2()
     {
         return $this->belongsTo(Disease::class, "kode_2");
@@ -24,5 +24,5 @@ class Knowledge extends Model
     {
         return $this->belongsTo(Disease::class, "penyakit");
     }
-    
+
 }

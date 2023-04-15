@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Pengetahuan</li>
                 </ol>
                 </nav>
-            <h1 class="mb-0 fw-bold">Pengetahuan</h1> 
+            <h1 class="mb-0 fw-bold">Pengetahuan</h1>
         </div>
         <div class="col-6">
             <div class="text-end upgrade-btn">
@@ -27,9 +27,9 @@
 
 
 <div class="container-fluid">
-   
+
     <div class="row">
-      
+
         <div class="col-lg-12 col-xlg-3 col-md-12">
 
             @if (session()->has('pesan'))
@@ -47,23 +47,7 @@
                 <div class="card-body">
                     <form action="{{route('knowledge.store')}}" class="form-horizontal form-material mx-2" method="POST" enctype="multipart/form-data" >
                         @csrf
-                        <div class="form-group">
-                            <label class="col-sm-12">Gejala</label>
-                            <div class="col-sm-12">
-                                <select name="kode_1" class="form-control">
-                                    <option value="" selected disabled hidden>--Gejala--</option>
-                                    @foreach($quests as $quest)
-                                        <option value="{{$quest->id}}" {{old('kode_1')==$quest->id ? 'selected':''}}>{{$quest->kode}}</option>
-                                    @endforeach
-                                    @error('kode_1')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
-                                     @enderror
-                                </select>
-                            </div>
-                        </div>
-                        
+
                         <div class="form-group">
                             <label class="col-sm-12">Penyakit</label>
                             <div class="col-sm-12">
@@ -80,8 +64,23 @@
                                 </select>
                             </div>
                         </div>
-                                  
-                        
+
+                        <div class="form-group">
+                            <label class="col-sm-12">Gejala</label>
+                            <div class="col-sm-12">
+                                <select name="kode_1" class="select form-control">
+                                    <option value="" selected disabled hidden>--Gejala--</option>
+                                    @foreach($quests as $quest)
+                                        <option value="{{$quest->id}}" {{old('kode_1')==$quest->id ? 'selected':''}}>{{$quest->kode}}</option>
+                                    @endforeach
+                                    @error('kode_1')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                     @enderror
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button class="btn btn-success text-white" type="submit">Submit</button>
@@ -90,7 +89,7 @@
                     </form>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -105,7 +104,7 @@
                             <h4 class="card-title">Pengetahuan</h4>
                             <h5 class="card-subtitle">Rules</h5>
                         </div>
-                        
+
                     </div>
                     <!-- title -->
                     <div class="table-responsive">
@@ -117,7 +116,7 @@
                                     <th class="border-top-0">Maka</th>
                                     <th class="border-top-0">Penyebab</th>
                                     <th class="border-top-0">Solusi</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,45 +126,45 @@
 
                                     <td>
                                         @foreach($knowledge as $k)
-                                           <br>{{ $loop->iteration }} 
+                                           <br>{{ $loop->iteration }}
                                         @endforeach
                                    </td>
                                     <td>
                                          @foreach($knowledge as $k)
-                                            <br>{{ $k->kode1->gejala }} 
+                                            <br>{{ $k->kode1->gejala }}
                                          @endforeach
                                     </td>
 
                                     <td>
                                         @foreach($knowledge as $k)
-                                           <br>{{ $k->kode2->penyakit }} 
+                                           <br>{{ $k->kode2->penyakit }}
                                         @endforeach
                                     </td>
 
                                    <td>
                                         @foreach($knowledge as $k)
-                                        <br>{{ $k->kode2->penyebab }} 
+                                        <br>{{ $k->kode2->penyebab }}
                                         @endforeach
                                    </td>
 
                                     <td>
                                         @foreach($knowledge as $k)
-                                        <br>{{ $k->kode2->solusi }} 
+                                        <br>{{ $k->kode2->solusi }}
                                         @endforeach
                                     </td>
-                                    
+
                                     {{-- <td>
                                         @foreach($knowledge1->unique() as $k1)
-                                           <br> {{ $k1->kode_1 }} 
+                                           <br> {{ $k1->kode_1 }}
                                         @endforeach
                                     </td> --}}
-           
-                                    
-                                    
+
+
+
                                 </tr>
                             </tbody>
 
-                            
+
                         </table>
                     </div>
                 </div>
@@ -179,7 +178,7 @@
     <div class="row">
         <div class="col-lg-12 col-xlg-3 col-md-12">
             <div class="card">
-                
+
             </div>
         </div>
     </div>

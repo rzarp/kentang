@@ -127,7 +127,7 @@
     <script src="{{asset('assets/libs/chartist/dist/chartist.min.js')}}">"></script>
     <script src="{{asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')}}">"></script>
     <script src="{{asset('assets/js/pages/dashboards/dashboard1.js')}}">"></script>
-   <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
    @stack('scripts')
 </body>

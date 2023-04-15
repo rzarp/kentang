@@ -12,26 +12,42 @@ use Illuminate\Http\Request;
 
 class KnowledgeController extends Controller
 {
-  
+
     public function index()
     {
+        $dd = Knowledge::with('kode1','kode2')
+        ->groupBy('kode2')
+        ->get();
+
+        return "asddasd";
+
+
         $data['knowledge'] = DB::table('knowledge')->latest()->get();
         return view('admin.disease.viewknowledge',$data);
     }
 
-    
+
     public function create()
     {
-        
-        // $knowledge1 = DB::table('knowledge')->distinct()->get(['kode_1']);
-        
+
+        $knowledge1 = DB::table('knowledge as k')
+        // ->select('k.kode_2', DB::raw('count(*) as haha'))
+        ->join('quests as q', 'k.kode_2', '=', 'q.id')
+        ->join('diseases as d', 'k.kode_1', '=', 'd.id')
+        // ->select('d.penyakit', DB::raw('count(q.gejala) as gejala'))
+        // ->groupBy('d.penyakit')
+        // ->select('d.penyakit')
+        ->get();
+        // dd($knowledge1);
+        return $knowledge1;
+
 
         $knowledge = Knowledge::with('kode1','kode2')->get();
-        
+
         $quests = Quest::all();
         $diseases = Disease::all();
         return view('admin.knowledge.knowledge',compact('quests','diseases', 'knowledge'));
-        
+
     }
 
 
@@ -42,7 +58,7 @@ class KnowledgeController extends Controller
         $request->validate ([
             'kode_1'       => 'required',
             'kode_2'       => 'required',
-            
+
         ]);
 
         DB::table('knowledge')
@@ -58,47 +74,52 @@ class KnowledgeController extends Controller
     public function show(Request $request)
     {
         if ($request->ajax()) {
-            $data = Knowledge::with('kode1','kode2')->get();
-            return Datatables::of($data)
-                    ->editColumn('created_at', function ($user) {
-                        return [
-                        'display' => e($user->created_at->format('d/m/Y H:i:s')),
-                        'timestamp' => $user->created_at->timestamp
-                        ];
-                    })
-                    ->editColumn('updated_at', function ($user) {
-                        return [
-                        'display' => ($user->updated_at->format('d/m/Y H:i:s')),
-                        'timestamp' => $user->updated_at->timestamp
-                        ];
-                    })
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row)
-                    {
-   
-                        $btn = 
-                        '
-                        <a href="'.route('knowledge.edit',['id' => $row->id]).'" class="btn btn-primary btn-action mr-1 edit-confirm" data-toggle="tooltip" title="" data-original-title="Edit" ><i class="fas fa-pencil-alt"></i></a>
-                        <a href="'.route('knowledge.delete',['id' => $row->id]).'" class="btn btn-danger btn-action trigger--fire-modal-2 delete-confirm" data-toggle="tooltip" title=""data-original-title="Delete"><i class="fas fa-trash"></i></a>
-                        ';
-                        return $btn;
-                    })
+            $data = Knowledge::with('kode1','kode2')
+            ->groupBy('kode2')
+            ->get();
 
-                    ->addColumn('kode1', function($row)
-                    {
-                        return $row->kode1->kode.$row->kode1->gejala ;
-                    })
-                    ->addColumn('kode2', function($row)
-                    {
-                        return $row->kode2->kode.$row->kode2->penyakit ;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+            // return $data;
+            // return Datatables::of($data)
+            //         ->editColumn('created_at', function ($user) {
+            //             return [
+            //             'display' => e($user->created_at->format('d/m/Y H:i:s')),
+            //             'timestamp' => $user->created_at->timestamp
+            //             ];
+            //         })
+            //         ->editColumn('updated_at', function ($user) {
+            //             return [
+            //             'display' => ($user->updated_at->format('d/m/Y H:i:s')),
+            //             'timestamp' => $user->updated_at->timestamp
+            //             ];
+            //         })
+            //         ->addIndexColumn()
+            //         ->addColumn('action', function($row)
+            //         {
+
+            //             $btn =
+            //             '
+            //             <a href="'.route('knowledge.edit',['id' => $row->id]).'" class="btn btn-primary btn-action mr-1 edit-confirm" data-toggle="tooltip" title="" data-original-title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+            //             <a href="'.route('knowledge.delete',['id' => $row->id]).'" class="btn btn-danger btn-action trigger--fire-modal-2 delete-confirm" data-toggle="tooltip" title=""data-original-title="Delete"><i class="fas fa-trash"></i></a>
+            //             ';
+            //             return $btn;
+            //         })
+
+            //         ->addColumn('kode1', function($row)
+            //         {
+            //             return $row->kode1->kode.$row->kode1->gejala ;
+            //         })
+            //         ->addColumn('kode2', function($row)
+            //         {
+            //             return $row->kode2->kode.$row->kode2->penyakit ;
+            //         })
+            //         ->rawColumns(['action'])
+            //         ->make(true);
         }
+        return $data;
         return view('admin.knowledge.viewknowledge');
     }
 
- 
+
     public function edit($id) {
         $quests = Quest::all();
         $diseases = Disease::all();
@@ -106,14 +127,14 @@ class KnowledgeController extends Controller
         return view('admin.knowledge.edit-knowledge',compact('quests', 'diseases','knowledge'));
     }
 
-  
+
     public function update(Request $request, $id)
     {
         $knowledge = Knowledge::find($id);
         $request->validate ([
             'kode_1'       => 'required',
             'kode_2'       => 'required',
-            
+
         ]);
 
         DB::table('knowledge')
@@ -126,11 +147,11 @@ class KnowledgeController extends Controller
         return redirect(route('knowledge.edit',$id))->with('pesan','Data Berhasil diupdate');
     }
 
-    
+
     public function destroy($id)
     {
-       
-       
+
+
 
         DB::table('knowledge')->where('id',$id)->delete();
 
