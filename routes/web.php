@@ -28,7 +28,6 @@ Auth::routes();
 Route::prefix('auth')->group(function () {
     Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
     Route::get('/users', [HomeController::class, 'index'])->name('home');
-    
 });
 
 //setting
@@ -71,8 +70,8 @@ Route::prefix('knowledge')->group(function () {
 
 // konsultasi 
 Route::prefix('konsultasi')->group(function () {
-    Route::get('/konsultasi', [KonsultasiController::class,'create'])->name('konsultasi');
-    Route::post('/konsultasi/store',[KonsultasiController::class,'store'])->name('konsultasi.store');
+    Route::get('/konsultasi', [KonsultasiController::class,'index'])->name('konsultasi');
+    Route::get('/kusioner', [KonsultasiController::class,'kusioner'])->name('kusioner');
 });
 
 

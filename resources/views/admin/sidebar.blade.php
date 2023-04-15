@@ -17,9 +17,6 @@
     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
         href="#" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
             class="hide-menu">Laporan</span></a></li>
-    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-        href="{{route('konsultasi')}}" aria-expanded="false"><i class="mdi mdi-file-document"></i><span
-            class="hide-menu">Konsultasi</span></a></li>
     <li class="text-center p-40 upgrade-btn">
         <a href="https://www.wrappixel.com/templates/flexy-bootstrap-admin-template/"
             class="btn d-block w-100 btn-danger text-white" target="_blank">Upgrade to Pro</a>
