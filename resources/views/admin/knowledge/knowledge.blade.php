@@ -90,6 +90,64 @@
                 </div>
             </div>
 
+            <div class="row">
+                <!-- column -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- title -->
+                            <div class="d-md-flex">
+                                <div>
+                                    <h4 class="card-title">Pengetahuan</h4>
+                                    <h5 class="card-subtitle">Rules</h5>
+                                </div>
+
+                            </div>
+                            <!-- title -->
+                            <div class="table-responsive">
+                                <table class="table mb-0 table-hover align-middle text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">No</th>
+                                            <th class="border-top-0">Jika</th>
+                                            <th class="border-top-0">Maka</th>
+                                            <th class="border-top-0">Penyebab</th>
+                                            <th class="border-top-0">Solusi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($rule as $rule)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                @foreach ($rule['gejala'] as $gejala)
+                                                    @if ($loop->first)
+                                                    <span class="badge badge-primary mb-1">JIKA</span>
+                                                        {{-- {{'Jika'}} --}}
+                                                    @endif
+                                                    {{ $gejala }}
+                                                    <br>
+                                                    @if (!$loop->last)
+                                                    <span class="badge badge-warning mb-1">DAN</span>
+                                                        {{-- {{'Dan'}} --}}
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>{{ $rule['penyakit'] }}</td>
+                                            <td>{{ $rule['penyebab'] }}</td>
+                                            <td>{{ $rule['solusi'] }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 @endsection
