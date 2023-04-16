@@ -33,7 +33,7 @@ Route::prefix('auth')->group(function () {
 //setting
 Route::prefix('setting')->group(function () {
     Route::get('/setting', [UserController::class,'index'])->name('setting');
-    Route::put('/setting-action', [UserController::class,'updateProfile'])->name('profile.action'); 
+    Route::put('/setting-action', [UserController::class,'updateProfile'])->name('profile.action');
 });
 
 
@@ -68,10 +68,10 @@ Route::prefix('knowledge')->group(function () {
 });
 
 
-// konsultasi 
+// konsultasi
 Route::prefix('konsultasi')->group(function () {
     Route::get('/konsultasi', [KonsultasiController::class,'index'])->name('konsultasi');
-    Route::get('/kusioner', [KonsultasiController::class,'kusioner'])->name('kusioner');
+    Route::post('/kusioner', [KonsultasiController::class,'kusioner'])->name('kusioner');
 });
 
 

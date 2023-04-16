@@ -1,36 +1,58 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Knowledge;
+use App\Quest;
+use App\Disease;
 use DB;
 use Illuminate\Http\Request;
 
 class KonsultasiController extends Controller
 {
-   
 
-    
+
+
     public function index()
     {
         return view('user.konsultasi.konsultasi');
     }
 
-    public function kusioner()
+    public function kusioner(Request $request)
     {
-        return view('user.konsultasi.kusioner');
+        if ($request->answer) {
+            $q = $request->answer;
+            if ($q == 'y') {
+                return $request;
+            }else {
+                return $request;
+            }
+
+            return view('user.konsultasi.kusioner1', compact('q'));
+        }
+
+        $dataDiri = $request;
+        session(['dataDiri' => $dataDiri]);
+
+        $quest = Quest::select('id','kode', 'gejala')
+        ->orderBy('kode', 'asc')->first();
+
+        return $dataDiri;
+
+        return view('user.konsultasi.kusioner1', compact('quest', 'dataDiri'));
     }
 
-   
+
     public function create()
     {
-         
+
     }
 
     public function store(Request $request)
     {
 
-       
+
     }
- 
+
     public function show(Konsultasi $konsultasi)
     {
         //
@@ -41,7 +63,7 @@ class KonsultasiController extends Controller
         //
     }
 
- 
+
     public function update(Request $request, Konsultasi $konsultasi)
     {
         //
