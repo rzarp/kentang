@@ -91,6 +91,7 @@
             @yield('knowledge')
             @yield('view-knowledge')
             @yield('edit-knowledge')
+            @yield('rules')
             @yield('konsultasi')
             <!-- footer -->
             <!-- ============================================================== -->

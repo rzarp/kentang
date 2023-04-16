@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\KnowledgeController;
 use App\Http\Controllers\KonsultasiController;
+use App\Http\Controllers\RulesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,6 +66,11 @@ Route::prefix('knowledge')->group(function () {
     Route::get('/knowledge/edit/{id}',[KnowledgeController::class,'edit'])->name('knowledge.edit');
     Route::put('/knowledge/edit/{id}',[KnowledgeController::class,'update'])->name('knowledge.update');
     Route::get('/knowledge/delete/{id}',[KnowledgeController::class,'destroy'])->name('knowledge.delete');
+});
+
+// rules
+Route::prefix('rules')->group(function () {
+    Route::get('/rules', [RulesController::class,'index'])->name('rules');
 });
 
 
