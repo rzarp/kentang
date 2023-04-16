@@ -48,7 +48,7 @@
                     {{-- <form action="" class="form-horizontal form-material mx-2" method="get" enctype="multipart/form-data" >
                         @csrf --}}
                         <div class="form-group">
-                            <label class="col-md-12"><h5>Apakah Pasien {{ $quest->gejala }} ? </h5></label>
+                            <label class="col-md-12" id="question"><h5>Apakah Pasien {{ $quest->gejala }} ? </h5></label>
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <div class="row">
@@ -57,7 +57,7 @@
                                             <button class="btn btn-danger text-white btn-answ" type="button" id="btn_n" value="n">Tidak</button>
                                         </div>
                                         <div class="col-2 justify-content-end">
-                                            <button class="right-1 btn btn-warning text-white" type="button" >Kembali</button>
+                                            <button class="right-1 btn btn-warning text-white" type="button" id="kembali">Kembali</button>
                                             <button class="right-1 btn btn-danger text-white" type="button" >Reset</button>
                                         </div>
                                       </div>
@@ -84,15 +84,22 @@
 
             // jQuery Ajax Post Request
             $.post("{{ route('kusioner') }}", {
+                _token: "{{ csrf_token() }}",
                 answer:  e.target.value,
-                data:{
-                    dataDiri: "{{ $dataDiri }}",
-                    curQuest: "{{ $quest->id }}"
-                }
+                id: "{{ $quest->id }}"
             }, (response) => {
                 // response from PHP back-end
                 console.log(response);
+
+
             });
+        });
+
+
+
+        // Kembali
+        $('#kembali').on("click", (e) => {
+            location.href = "{{ route('reset-kusioner') }}";
         });
     });
 </script>
