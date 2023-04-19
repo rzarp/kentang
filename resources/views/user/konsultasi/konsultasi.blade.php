@@ -45,7 +45,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('kusioner')}}" class="form-horizontal form-material mx-2" method="post" enctype="multipart/form-data" >
+                    <form action="{{ route('kusioner')}}" class="form-horizontal form-material mx-2" method="get" enctype="multipart/form-data" >
                         @csrf
                         <div class="form-group">
                             <label class="col-md-12">Nama</label>

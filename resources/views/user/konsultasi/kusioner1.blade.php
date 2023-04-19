@@ -45,16 +45,16 @@
 
             <div class="card">
                 <div class="card-body">
-                    {{-- <form action="" class="form-horizontal form-material mx-2" method="get" enctype="multipart/form-data" >
-                        @csrf --}}
+                    {{-- <form action="" class="form-horizontal form-material mx-2" method="get" enctype="multipart/form-data" > --}}
+                        {{-- @csrf --}}
                         <div class="form-group">
-                            <label class="col-md-12" id="question"><h5>Apakah Pasien {{ $quest->gejala }} ? </h5></label>
+                            <label class="col-md-12" id="question"><h5>Apakah Pasien {{ $quest->q_quest->gejala }} ? </h5></label>
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-10">
-                                            <button class="btn btn-success text-white btn-answ" type="button" id="btn_y" value="y">Ya</button>
-                                            <button class="btn btn-danger text-white btn-answ" type="button" id="btn_n" value="n">Tidak</button>
+                                            <button class="btn btn-success text-white btn-answ" type="button" id="btn_y" value="{{ (isset($quest->q_yes) ? $quest->q_yes->id : 'tidak ada') }}">Ya</button>
+                                            <button class="btn btn-danger text-white btn-answ" type="button" id="btn_n" value="{{(isset($quest->q_no) ? $quest->q_no->id : 'tidak ada') }}">Tidak</button>
                                         </div>
                                         <div class="col-2 justify-content-end">
                                             <button class="right-1 btn btn-warning text-white" type="button" id="kembali">Kembali</button>
@@ -76,23 +76,9 @@
 @push('scripts')
 <script>
     $(function() {
-        btn = $(".btn-answ");
-        console.log(btn);
-
-        // Adding event listener to button
-        btn.on("click", (e) => {
-
-            // jQuery Ajax Post Request
-            $.post("{{ route('kusioner') }}", {
-                _token: "{{ csrf_token() }}",
-                answer:  e.target.value,
-                id: "{{ $quest->id }}"
-            }, (response) => {
-                // response from PHP back-end
-                console.log(response);
-
-
-            });
+        $('.btn-answ').on("click", (e) => {
+            token = $('input[name="_token"]').val();
+            location.href = "{{ route('kusioner', $quest->id.'/'.$quest->q_quest->id) }}/"+e.target.value;
         });
 
 

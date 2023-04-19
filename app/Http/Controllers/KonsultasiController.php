@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Knowledge;
 use App\Quest;
+use App\Rule;
 use App\Disease;
 use DB;
 use Illuminate\Http\Request;
@@ -31,68 +32,29 @@ class KonsultasiController extends Controller
         return view('user.konsultasi.konsultasi');
     }
 
-    public function kusioner(Request $request)
+    public function kusioner(Request $request, $ruleId = null, $parent = null, $quest = null)
     {
-        if ($request->answer) {
-            $q = $request->answer;
-            $id = $request->id;
-
-            if ($q == 'y') {
-
-                if (Session::has('rule')) {
-                    $rule = Session::get('rule');
-                }else{
-                    $rule = new Collection();
-                }
-
-                $rule->push($id);
-                Session::put(['rule' => $rule]);
-
-                $diseases = DB::table('knowledge as k')
-                // ->select('penyakit', 'q.kode', 'd.kode as kode_penyakit')
-                // ->join('diseases as d', 'k.kode_2', '=', 'd.id')
-                // ->join('quests as q', 'k.kode_1', '=', 'q.id')
-                ->where('k.kode_1', '=',$id)
-                ->orderBy('kode_2')
-                ->first();
-                // dd($diseases);
-
-                $quest = DB::table('knowledge as k')
-                ->select('gejala', 'q.id', 'kode_2')
-                ->join('quests as q', 'k.kode_1', '=', 'q.id')
-                ->where('k.kode_2', $diseases->kode_2)
-                ->where('k.kode_2', '!=',)
-                ->get();
-
-                return $quest;
-
-                $knowledge = DB::table('knowledge as k')
-                ->select('gejala', 'q.id')
-                ->join('quests as q', 'k.kode_1', '=', 'q.id')
-                ->where('k.kode_2', '=',$diseases[0]->id)
-                ->get();
-
-                $quest = Quest::select('id','kode', 'gejala')
-                ->where('id', '=', $id)
-                ->orderBy('kode', 'asc')->get();
-
-                return $quest;
-            }else {
-                return "no";
-            }
-
-            return view('user.konsultasi.kusioner1', compact('q'));
+        if ($quest == 'tidak ada') {
+            $hasil = Rule::find($ruleId);
+            return $hasil;
         }
 
-        $dataDiri = $request;
-        Session::put(['nama' => $dataDiri->nama]);
-        Session::put(['nohp' => $dataDiri->nohp]);
-        Session::put(['alamat' => $dataDiri->alamat]);
-        Session::put(['option' => $dataDiri->option]);
-        Session::put(['tanggal' => $dataDiri->tanggal]);
+        $nextQuestion = Rule::where('parent', '=', $parent)
+                        ->where('quest', '=', $quest)
+                        ->first();
 
-        $quest = Quest::select('id','kode', 'gejala')
-        ->orderBy('kode', 'asc')->first();
+        if ($nextQuestion) {
+            $quest = $nextQuestion;
+        }else{
+            $dataDiri = $request;
+            Session::put(['nama' => $dataDiri->nama]);
+            Session::put(['nohp' => $dataDiri->nohp]);
+            Session::put(['alamat' => $dataDiri->alamat]);
+            Session::put(['option' => $dataDiri->option]);
+            Session::put(['tanggal' => $dataDiri->tanggal]);
+
+            $quest = Rule::where('parent','=', null)->first();
+        }
 
 
         return view('user.konsultasi.kusioner1', compact('quest'));

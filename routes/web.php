@@ -83,7 +83,7 @@ Route::prefix('rules')->group(function () {
 // konsultasi
 Route::prefix('konsultasi')->group(function () {
     Route::get('/konsultasi', [KonsultasiController::class,'index'])->name('konsultasi');
-    Route::post('/kusioner', [KonsultasiController::class,'kusioner'])->name('kusioner');
+    Route::get('/kusioner/{rule?}/{parent?}/{quest?}', [KonsultasiController::class,'kusioner'])->name('kusioner');
     Route::get('/reset-kusioner', [KonsultasiController::class,'resetKuis'])->name('reset-kusioner');
 
 });
