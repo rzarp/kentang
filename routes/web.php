@@ -79,6 +79,11 @@ Route::prefix('rules')->group(function () {
 
 });
 
+Route::prefix('report')->group(function () {
+    Route::get('/report', [RulesController::class,'report'])->name('report');
+});
+
+
 
 // konsultasi
 Route::prefix('konsultasi')->group(function () {

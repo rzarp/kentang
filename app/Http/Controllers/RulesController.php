@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quest;
 use App\Rule;
 use App\Disease;
+use App\Report;
 use DB;
 
 class RulesController extends Controller
@@ -53,5 +54,11 @@ class RulesController extends Controller
     public function delete($id)
     {
         # code...
+    }
+
+    public function report()
+    {
+        $reports = Report::all();
+        return $reports;
     }
 }
