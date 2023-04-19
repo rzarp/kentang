@@ -36,6 +36,16 @@ class KonsultasiController extends Controller
     {
         if ($quest == 'tidak ada') {
             $hasil = Rule::find($ruleId);
+            $dataDiri = [
+                'nama' => Session::get('nama'),
+                'nohp' => Session::get('nohp'),
+                'alamat' => Session::get('alamat'),
+                'gender' => Session::get('option'),
+                'hasil' => "[".$hasil->d_hipotesa->kode."] ".$hasil->d_hipotesa->penyebab." | ".$hasil->d_hipotesa->solusi
+            ];
+
+            DB::table('reports')->insert($dataDiri);
+
             return $hasil;
         }
 

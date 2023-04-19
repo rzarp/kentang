@@ -45,8 +45,6 @@
 
             <div class="card">
                 <div class="card-body">
-                    {{-- <form action="" class="form-horizontal form-material mx-2" method="get" enctype="multipart/form-data" > --}}
-                        {{-- @csrf --}}
                         <div class="form-group">
                             <label class="col-md-12" id="question"><h5>Apakah Pasien {{ $quest->q_quest->gejala }} ? </h5></label>
                             <div class="form-group">
@@ -58,16 +56,12 @@
                                         </div>
                                         <div class="col-2 justify-content-end">
                                             <button class="right-1 btn btn-warning text-white" type="button" id="kembali">Kembali</button>
-                                            <button class="right-1 btn btn-danger text-white" type="button" >Reset</button>
+                                            {{-- <button class="right-1 btn btn-danger text-white" type="button" >Reset</button> --}}
                                         </div>
                                       </div>
-
-
-
                                 </div>
                             </div>
                         </div>
-                    {{-- </form> --}}
                 </div>
             </div>
         </div>

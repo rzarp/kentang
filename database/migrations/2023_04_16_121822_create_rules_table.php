@@ -27,7 +27,8 @@ class CreateRulesTable extends Migration
             $table->unsignedBigInteger("no")->nullable();
             $table->foreign('no')->references('id')->on('quests');
 
-            $table->string('hipotesa')->nullable();
+            $table->unsignedBigInteger('hipotesa')->nullable();
+            $table->foreign('hipotesa')->references('id')->on('diseases');
 
             $table->timestamps();
         });

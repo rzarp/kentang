@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Quest;
 use App\Rule;
+use App\Disease;
 use DB;
 
 class RulesController extends Controller
@@ -16,8 +17,9 @@ class RulesController extends Controller
         $pertanyaans = Quest::all();
         $yas = Quest::all();
         $tidaks = Quest::all();
+        $penyakits = Disease::all();
 
-        return view('admin.rules.rules', compact('rules','parents','pertanyaans','yas','tidaks'));
+        return view('admin.rules.rules', compact('rules','parents','pertanyaans','yas','tidaks', 'penyakits'));
     }
 
     public function store(Request $request)
@@ -27,7 +29,7 @@ class RulesController extends Controller
             'quest'       => 'required|exists:quests,id',
             'yes'       => 'nullable|exists:quests,id',
             'no'       => 'nullable|exists:quests,id',
-            'hipotesa'       => 'nullable',
+            'hipotesa'       => 'nullable|exists:diseases,id',
 
         ]);
 

@@ -119,7 +119,17 @@
                         <div class="form-group">
                             <label class="col-md-12">Hipotesa</label>
                             <div class="col-md-12">
-                                <input type="text" placeholder="hipotesa" class="form-control form-control-line" name="hipotesa" id="" value="" >
+                                <select name="no" class="form-control">
+                                    <option value="" selected>--Penyakit ?--</option>
+                                    @foreach($penyakits as $penyakit)
+                                        <option value="{{$penyakit->id}}"> {{$penyakit->kode}} </option>
+                                    @endforeach
+                                    @error('kode_1')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                     @enderror
+                                </select>
                             </div>
                         </div>
 
@@ -177,7 +187,7 @@
                                                 {{(isset($rule->q_no) ? $rule->q_no->kode." - ".$rule->q_no->gejala : "-")}}
                                             </td>
                                             <td>
-                                                {{(isset($rule->hipotesa) ? $rule->hipotesa : "-")}}
+                                                {{(isset($rule->d_hipotesa) ? $rule->d_hipotesa->kode : "-")}}
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger text-white" type="submit">Hapus</button> |

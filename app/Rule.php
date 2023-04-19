@@ -26,4 +26,8 @@ class Rule extends Model
         return $this->hasOne(Quest::class, 'id',"no");
     }
 
+    public function d_hipotesa()
+    {
+        return $this->hasOne(Disease::class, 'id', 'hipotesa');
+    }
 }
