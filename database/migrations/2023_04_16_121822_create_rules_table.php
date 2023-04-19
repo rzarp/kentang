@@ -16,7 +16,7 @@ class CreateRulesTable extends Migration
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("parent")->nullable();
-            $table->foreign('parent')->references('id')->on('rules');
+            $table->foreign('parent')->references('id')->on('quests');
 
             $table->unsignedBigInteger("quest");
             $table->foreign('quest')->references('id')->on('quests');

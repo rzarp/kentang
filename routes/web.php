@@ -71,6 +71,12 @@ Route::prefix('knowledge')->group(function () {
 // rules
 Route::prefix('rules')->group(function () {
     Route::get('/rules', [RulesController::class,'index'])->name('rules');
+    Route::post('/rules', [RulesController::class,'store'])->name('rules.store');
+    Route::get('/rules/update/{id}', [RulesController::class,'edit'])->name('rules.edit');
+    Route::put('/rules/update/{id}', [RulesController::class,'update'])->name('rules.update');
+    Route::delete('/rules/delete/{id}', [RulesController::class,'delete'])->name('rules.delete');
+
+
 });
 
 

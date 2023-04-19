@@ -45,31 +45,82 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('knowledge.store')}}" class="form-horizontal form-material mx-2" method="POST" enctype="multipart/form-data" >
+                    <form action="{{route('rules.store')}}" class="form-horizontal form-material mx-2" method="POST" enctype="multipart/form-data" >
                         @csrf
 
                         <div class="form-group">
                             <label class="col-md-12">Parent</label>
                             <div class="col-md-12">
-                                <input type="text" placeholder="Parent" class="form-control form-control-line" name="kode" id="" value="" >
+                                <select name="parent" class="form-control">
+                                    <option value="" selected>--Parent--</option>
+                                    @foreach($parents as $parent)
+                                        <option value="{{$parent->id}}"> {{$parent->kode}} </option>
+                                    @endforeach
+                                    @error('kode_1')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                     @enderror
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-12">Quest</label>
+                            <label class="col-md-12">Pertanyaan</label>
                             <div class="col-md-12">
-                                <input type="text" placeholder="quest" class="form-control form-control-line" name="kode" id="" value="" >
+                                <select name="quest" class="form-control">
+                                    <option value="" selected disabled hidden>--Pertanyaan--</option>
+                                    @foreach($pertanyaans as $pertanyaan)
+                                        <option value="{{$pertanyaan->id}}"> {{$pertanyaan->kode}} </option>
+                                    @endforeach
+                                    @error('kode_1')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                     @enderror
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-12">Ya Atau Tidak</label>
-                            <div class="form-group col-sm-12">
-                                <label class="radio-inline col-md-6">
-                                <input type="radio" id="smt-fld-1-2" value="ya" name="option">Ya</label>
-                                <label class="radio-inline col-md-6">
-                                <input type="radio" id="smt-fld-1-3" value="tidak" name="option">Tidak</label>
-                           </div>
+                            <label class="col-md-12">Ya ?</label>
+                            <div class="col-md-12">
+                                <select name="yes" class="form-control">
+                                    <option value="" selected>--Ya ?--</option>
+                                    @foreach($yas as $ya)
+                                        <option value="{{$ya->id}}"> {{$ya->kode}} </option>
+                                    @endforeach
+                                    @error('kode_1')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                     @enderror
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-12">Tidak ?</label>
+                            <div class="col-md-12">
+                                <select name="no" class="form-control">
+                                    <option value="" selected>--Tidak ?--</option>
+                                    @foreach($tidaks as $tidak)
+                                        <option value="{{$tidak->id}}"> {{$tidak->kode}} </option>
+                                    @endforeach
+                                    @error('kode_1')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
+                                     @enderror
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-12">Hipotesa</label>
+                            <div class="col-md-12">
+                                <input type="text" placeholder="hipotesa" class="form-control form-control-line" name="hipotesa" id="" value="" >
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -109,22 +160,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        @foreach ($rules as $rule)
+
                                         <tr>
-                                            <td>1</td>
+                                            <td>{{$loop->iteration}}</td>
                                             <td>
-                                                asdlkjaslkdj
+                                                {{(isset($rule->q_parent) ? $rule->q_parent->kode." - ".$rule->q_parent->gejala : "-")}}
                                             </td>
-                                            <td>batang layu</td>
-                                            <td>daun kuning</td>
-                                            <td>daun kering</td>
-                                            <td>hama</td>
+                                            <td>
+                                                {{(isset($rule->q_quest) ? $rule->q_quest->kode." - ".$rule->q_quest->gejala : "-")}}
+                                            </td>
+                                            <td>
+                                                {{(isset($rule->q_yes) ? $rule->q_yes->kode." - ".$rule->q_yes->gejala : "-")}}
+                                            </td>
+                                            <td>
+                                                {{(isset($rule->q_no) ? $rule->q_no->kode." - ".$rule->q_no->gejala : "-")}}
+                                            </td>
+                                            <td>
+                                                {{(isset($rule->hipotesa) ? $rule->hipotesa : "-")}}
+                                            </td>
                                             <td>
                                                 <button class="btn btn-danger text-white" type="submit">Hapus</button> |
                                                 <button class="btn btn-success text-white" type="submit">Edit</button>
                                             </td>
                                         </tr>
-                                       
+                                        @endforeach
+
+
                                     </tbody>
 
 
