@@ -59,6 +59,6 @@ class RulesController extends Controller
     public function report()
     {
         $reports = Report::all();
-        return $reports;
+        return view('admin.report.report', $reports);
     }
 }
