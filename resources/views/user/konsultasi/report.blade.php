@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('user.base')
 @section('report')
 
 

@@ -5,10 +5,12 @@ use App\Knowledge;
 use App\Quest;
 use App\Rule;
 use App\Disease;
+use App\Report;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Session;
+use Auth;
 
 class KonsultasiController extends Controller
 {
@@ -28,6 +30,7 @@ class KonsultasiController extends Controller
         Session::forget('alamat');
         Session::forget('option');
         Session::forget('tanggal');
+        Session::forget('pherap');
 
         return view('user.konsultasi.konsultasi');
     }
@@ -36,23 +39,24 @@ class KonsultasiController extends Controller
     {
         if ($quest == 'tidak ada') {
             $hasil = Rule::find($ruleId);
+            $pherap = Session::get('pherap');
             $dataDiri = [
+                'user_id' => Auth::user()->id,
                 'nama' => Session::get('nama'),
                 'nohp' => Session::get('nohp'),
                 'alamat' => Session::get('alamat'),
                 'gender' => Session::get('option'),
-                'hasil' => "[".$hasil->d_hipotesa->kode."] ".$hasil->d_hipotesa->penyebab." | ".$hasil->d_hipotesa->solusi
+                'hasil' => $hasil->hipotesa ? "[".$hasil->d_hipotesa->kode." - ".$hasil->d_hipotesa->penyakit."] ".$hasil->d_hipotesa->penyebab." | ".$hasil->d_hipotesa->solusi : "[".$pherap->kode." - ".$pherap->penyakit."] ".$pherap->penyebab." | ".$pherap->solusi,
+                'created_at' => Session::get('tanggal')
             ];
-
             DB::table('reports')->insert($dataDiri);
 
-            return $hasil;
+            return redirect(route('konsultasi'));
         }
 
         $nextQuestion = Rule::where('parent', '=', $parent)
                         ->where('quest', '=', $quest)
                         ->first();
-
         if ($nextQuestion) {
             $quest = $nextQuestion;
         }else{
@@ -65,9 +69,19 @@ class KonsultasiController extends Controller
 
             $quest = Rule::where('parent','=', null)->first();
         }
-
+        if ($quest->hipotesa) {
+            Session::put(['pherap' => $quest->d_hipotesa]);
+        }
 
         return view('user.konsultasi.kusioner1', compact('quest'));
+    }
+
+    public function reportByUser($userId)
+    {
+        if (Auth::user()->id != $userId) abort(403);
+
+        $reports = Report::where('user_id', '=',Auth::user()->id)->get();
+        return view('user.konsultasi.report', compact('reports'));
     }
 
 

@@ -83,6 +83,7 @@
             @yield('content')
             @yield('konsultasi')
             @yield('kusioner')
+            @yield('report')
 
             <!-- footer -->
             <!-- ============================================================== -->
